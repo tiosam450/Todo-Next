@@ -21,7 +21,7 @@ export default function Home() {
           />
         </div>
         <h1 className={styles.title}>
-          Sistema feito para você organizar <br />
+          Sistema feito para você organizar <br/>
           seus estudos e terefas
         </h1>
 
