@@ -7,7 +7,8 @@ import heroImg from "../../public/assets/hero.png";
 export default function Home() {
   return (
     <div className={styles.container}>
-      <Head>
+     
+     <Head>
         <title>Tarefas+ | Organize suas tarefas de forma fácil</title>
       </Head>
 
