@@ -18,7 +18,7 @@ export default function Home() {
             alt="Logo Tarefas+"
             src={heroImg}
             priority
-          />
+          /> 
         </div>
         <h1 className={styles.title}>
           Sistema feito para você organizar <br/>
