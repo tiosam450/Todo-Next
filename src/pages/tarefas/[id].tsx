@@ -71,12 +71,17 @@ const Tarefas = ({ tarefaFormatada, todosComentarios }: TarefasProps) => {
 
   async function deletaComentario(id: string) {
     try {
-      const docRef = doc(db, "Comentarios", id);
-      await deleteDoc(docRef);
+      await deleteDoc(doc(db, "Comentarios", id))
 
-      const deletComment = comentarios.filter((item) => item.id !== id);
+      // Deleta Usando o Filter
+      setComentarios(comentarios.filter((item) => item.id !== id));
 
-      setComentarios(deletComment);
+      // Deleta Usando o Splice
+      // const index = comentarios.findIndex((item) => item.id === id)
+      // const comentariosTemp = [...comentarios];
+      // comentariosTemp.splice(index, 1)
+      // setComentarios(comentariosTemp);
+
     } catch (erro) {
       alert('Erro ao deletar comentário');
       console.log(erro);
@@ -153,6 +158,8 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     })
   })
   
+  // Checa se exista usuario logado, caso contrário redireciona para página inicial
+
   const snapshot = await getDoc(docRef)
   
   if (snapshot.data() === undefined) {

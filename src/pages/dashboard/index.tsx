@@ -7,7 +7,7 @@ import { Textarea } from "../../components/textarea";
 import { FiShare2 } from "react-icons/fi";
 import { FaTrash } from "react-icons/fa";
 import { ChangeEvent, useState } from "react";
-import { addDoc, collection, deleteDoc, doc, onSnapshot, orderBy, query, where } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs, onSnapshot, orderBy, query, where } from "firebase/firestore";
 import db from "../api/auth/db_conection";
 import Link from "next/link";
 
@@ -27,10 +27,31 @@ interface TarefaProps {
   usuario: string;
 }
 
+interface TarefasProps {
+  tarefaFormatada: {
+    id: string
+    tarefa: string
+    check: boolean
+    data: string
+    user: string
+  }
+  todosComentarios: comentariosProps[]
+}
+
+interface comentariosProps {
+  id: string
+  idTarefa: string
+  comentario: string
+  nome: string
+  user: string
+}
+
+
 export default function Dashboard({ usuario }: UsuarioProps) {
   const [input, setInput] = useState('')
   const [check, setCheck] = useState(false)
   const [tarefas, setTarefas] = useState<TarefaProps[]>([]);
+  const [comentarios, setComentarios] = useState<comentariosProps[]>([])
 
   useEffect(() => {
     async function loadTarefas() {
@@ -89,6 +110,26 @@ export default function Dashboard({ usuario }: UsuarioProps) {
 
   async function deletaTarefa(id: string) {
     await deleteDoc(doc(db, 'Tarefas', id))
+    deletaComentario(id)
+  }
+
+  async function deletaComentario(id: string) {
+    const comentariosRef = collection(db, 'Comentarios');
+    const q = query(comentariosRef, where('idTarefa', '==', id));
+
+    try {
+      const querySnapshot = await getDocs(q);
+    
+      querySnapshot.forEach(async (document) => {
+        await deleteDoc(doc(db, "Comentarios", document.id));
+      });
+
+      setComentarios(comentarios.filter((item) => item.idTarefa !== id));
+
+    } catch (erro) {
+      alert('Erro ao deletar comentário');
+      console.log(erro);
+    }
   }
 
 
