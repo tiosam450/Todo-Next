@@ -37,14 +37,13 @@
   color: #fff;
   border: 1.5px solid #fff;
   cursor: pointer;
-  transition: all 0.4s;
+  transition:  0.2s ease-in-out all;
 }
 
 .loginButton:hover {
-  transform: scale(1.08);
+  transform: scale(1.05);
   background-color: #fff;
   color: #0f0f0f;
-  font-weight: bold;
 }
 
 .nav {

@@ -3,6 +3,8 @@ import styles from "../../src/styles/home.module.css";
 import Image from "next/image";
 
 import heroImg from "../../public/assets/hero.png";
+import { GetServerSideProps } from "next";
+import { getSession } from "next-auth/react";
 
 export default function Home() {
   return (
@@ -18,7 +20,7 @@ export default function Home() {
             alt="Logo Tarefas+"
             src={heroImg}
             priority
-          /> 
+          />
         </div>
         <h1 className={styles.title}>
           Sistema feito para você organizar <br/>
@@ -37,3 +39,22 @@ export default function Home() {
     </div>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const session = await getSession({ req });
+
+  if (session?.user) {
+    // Se tem usuario vamos redirecionar para a pagina de dashboard
+    return {
+      redirect: {
+        destination: "/dashboard",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
+

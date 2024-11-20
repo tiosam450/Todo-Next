@@ -37,6 +37,10 @@
   height: 18px;
 }
 
+.checkbox{
+  cursor: pointer;
+}
+
 .button {
   width: 100%;
   border: 0;
@@ -45,6 +49,10 @@
   background-color: #3183ff;
   padding: 12px 0;
   font-size: 18px;
+}
+
+.button:hover {
+  cursor: pointer;
 }
 
 .taskContainer {
